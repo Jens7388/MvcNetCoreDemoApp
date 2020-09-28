@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MvcNetCoreDemoApp_DataAccess
-{
+{/*
     public class ProductRepository: RepositoryBase<Product>
     {
         protected const string supplier = "Supplier";
@@ -23,5 +23,5 @@ namespace MvcNetCoreDemoApp_DataAccess
         {
             return context.Products.Include(supplier).Include(category);
         }
-    }
+    }*/
 }

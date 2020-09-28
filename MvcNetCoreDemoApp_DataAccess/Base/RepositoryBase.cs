@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MvcNetCoreDemoApp_DataAccess.Base
-{
+{/*
     public class RepositoryBase<T>: IRepositoryBase<T> where T : class
     {
         protected static NorthwindContext context;
@@ -42,5 +42,5 @@ namespace MvcNetCoreDemoApp_DataAccess.Base
         {
             context.SaveChanges();
         }
-    }
+    }*/
 }
