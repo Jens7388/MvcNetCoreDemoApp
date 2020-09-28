@@ -1,11 +1,16 @@
-﻿using MvcNetCoreDemoApp_DataAccess.Base;
+﻿using Microsoft.EntityFrameworkCore;
+
+using MvcNetCore.Models;
+
+using MvcNetCoreDemoApp_DataAccess.Base;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MvcNetCoreDemoApp_DataAccess
-{/*
+{
     public class SupplierRepository: RepositoryBase<Supplier>
     {
         protected const string products = "Products";
@@ -20,5 +25,5 @@ namespace MvcNetCoreDemoApp_DataAccess
         {
             return context.Suppliers.Include(products);
         }
-    }*/
+    }
 }

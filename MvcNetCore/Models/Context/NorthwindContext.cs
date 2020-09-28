@@ -33,7 +33,7 @@ namespace MvcNetCore.Models.Context
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<OrdersQry> OrdersQry { get; set; }
         public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997 { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrice { get; set; }
         public virtual DbSet<ProductsByCategory> ProductsByCategory { get; set; }
         public virtual DbSet<QuarterlyOrders> QuarterlyOrders { get; set; }
@@ -43,7 +43,7 @@ namespace MvcNetCore.Models.Context
         public virtual DbSet<Shippers> Shippers { get; set; }
         public virtual DbSet<SummaryOfSalesByQuarter> SummaryOfSalesByQuarter { get; set; }
         public virtual DbSet<SummaryOfSalesByYear> SummaryOfSalesByYear { get; set; }
-        public virtual DbSet<Suppliers> Suppliers { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Territories> Territories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -577,7 +577,7 @@ namespace MvcNetCore.Models.Context
                 entity.Property(e => e.ProductSales).HasColumnType("money");
             });
 
-            modelBuilder.Entity<Products>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.ProductId);
 
@@ -761,7 +761,7 @@ namespace MvcNetCore.Models.Context
                 entity.Property(e => e.Subtotal).HasColumnType("money");
             });
 
-            modelBuilder.Entity<Suppliers>(entity =>
+            modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.HasKey(e => e.SupplierId);
 

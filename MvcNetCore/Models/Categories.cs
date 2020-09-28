@@ -7,7 +7,7 @@ namespace MvcNetCore.Models
     {
         public Categories()
         {
-            Products = new HashSet<Products>();
+            Products = new HashSet<Product>();
         }
 
         public int CategoryId { get; set; }
@@ -15,6 +15,6 @@ namespace MvcNetCore.Models
         public string Description { get; set; }
         public byte[] Picture { get; set; }
 
-        public virtual ICollection<Products> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
