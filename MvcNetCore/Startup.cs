@@ -12,6 +12,8 @@ using MvcNetCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvcNetCore.Models.Context;
+using DataAccess;
 
 namespace MvcNetCore
 {
@@ -33,6 +35,8 @@ namespace MvcNetCore
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddScoped<ProductRepository>();
+
             services.AddRazorPages();
         }
 
