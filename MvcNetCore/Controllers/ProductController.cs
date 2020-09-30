@@ -31,7 +31,7 @@ namespace MvcNetCore.Controllers
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if(id == null)
+            if(id == 0)
             {
                 return NotFound();
             }
@@ -84,7 +84,7 @@ namespace MvcNetCore.Controllers
         //// GET: Product/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if(id == null)
+            if(id == 0)
             {
                 return NotFound();
             }
@@ -149,7 +149,7 @@ namespace MvcNetCore.Controllers
         // GET: Product/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if(id == null)
+            if(id == 0)
             {
                 return NotFound();
             }
