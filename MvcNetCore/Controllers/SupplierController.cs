@@ -103,7 +103,7 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    await _repo.UpdateAsync();
+                    await _repo.UpdateAsync(supplier);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

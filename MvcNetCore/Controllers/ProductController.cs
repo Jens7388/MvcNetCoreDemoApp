@@ -121,7 +121,7 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    await repository.UpdateAsync();
+                    await repository.UpdateAsync(product);
                 }
                 catch(DbUpdateConcurrencyException)
                 {

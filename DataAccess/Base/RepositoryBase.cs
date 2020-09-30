@@ -44,8 +44,9 @@ namespace DataAccess.Base
         }
 
 
-        public virtual async Task UpdateAsync()
+        public virtual async Task UpdateAsync(T t)
         {
+            context.Set<T>().Update(t);
             await context.SaveChangesAsync();
         }
 
