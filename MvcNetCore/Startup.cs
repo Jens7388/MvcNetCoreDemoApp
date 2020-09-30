@@ -36,6 +36,7 @@ namespace MvcNetCore
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<ProductRepository>();
+            services.AddScoped<SupplierRepository>();
 
             services.AddRazorPages();
         }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using DataAccess;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,34 +15,35 @@ namespace MvcNetCore.Controllers
 {
     public class SupplierController : Controller
     {
-        private readonly NorthwindContext _context;
+        private readonly SupplierRepository _repo;
 
-        public SupplierController(NorthwindContext context)
+        public SupplierController(SupplierRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: Supplier
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Suppliers.ToListAsync());
+            IEnumerable<Supplier> suppliers = await _repo.GetAllAsync();
+
+            return View(suppliers);
         }
 
         // GET: Supplier/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return NotFound();
             }
 
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
-            if (supplier == null)
+            Supplier supplier = await _repo.GetByIdAsync(id);
+
+            if(supplier == null)
             {
                 return NotFound();
             }
-
             return View(supplier);
         }
 
@@ -58,26 +62,28 @@ namespace MvcNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(supplier);
-                await _context.SaveChangesAsync();
+                await _repo.AddAsync(supplier);
                 return RedirectToAction(nameof(Index));
             }
             return View(supplier);
         }
 
         // GET: Supplier/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var supplier = await _context.Suppliers.FindAsync(id);
+            Supplier supplier = await _repo.GetByIdAsync(id);
             if (supplier == null)
             {
                 return NotFound();
             }
+           // IEnumerable<Product> products = await new ProductRepository().GetAllAsync();
+
+           // ViewData["ProductId"] = new SelectList(products, "ProductId", "ProductName", supplier.Products);
             return View(supplier);
         }
 
@@ -97,12 +103,11 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    _context.Update(supplier);
-                    await _context.SaveChangesAsync();
+                    await _repo.UpdateAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SupplierExists(supplier.SupplierId))
+                    if (!await SupplierExistsAsync(supplier.SupplierId))
                     {
                         return NotFound();
                     }
@@ -117,15 +122,14 @@ namespace MvcNetCore.Controllers
         }
 
         // GET: Supplier/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
+            Supplier supplier = await _repo.GetByIdAsync(id);
             if (supplier == null)
             {
                 return NotFound();
@@ -139,15 +143,18 @@ namespace MvcNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var supplier = await _context.Suppliers.FindAsync(id);
-            _context.Suppliers.Remove(supplier);
-            await _context.SaveChangesAsync();
+            Supplier supplier = await _repo.GetByIdAsync(id);
+
+            await _repo.DeleteAsync(supplier);
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SupplierExists(int id)
+        private async Task<bool> SupplierExistsAsync(int id)
         {
-            return _context.Suppliers.Any(e => e.SupplierId == id);
+            Supplier result = await _repo.GetByIdAsync(id);
+
+            return (result != null);
         }
     }
 }
