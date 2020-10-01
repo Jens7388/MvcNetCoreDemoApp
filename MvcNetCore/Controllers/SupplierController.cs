@@ -81,9 +81,6 @@ namespace MvcNetCore.Controllers
             {
                 return NotFound();
             }
-           // IEnumerable<Product> products = await new ProductRepository().GetAllAsync();
-
-           // ViewData["ProductId"] = new SelectList(products, "ProductId", "ProductName", supplier.Products);
             return View(supplier);
         }
 
@@ -146,7 +143,7 @@ namespace MvcNetCore.Controllers
             Supplier supplier = await _repo.GetByIdAsync(id);
 
             await _repo.DeleteAsync(supplier);
-
+                
             return RedirectToAction(nameof(Index));
         }
 

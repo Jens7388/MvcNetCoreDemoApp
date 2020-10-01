@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<MvcNetCore.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
 }
 
-
-
 <section class="row d-flex justify-content-center">
+    <div class="col-3">
+        <h1>Products</h1>
+    </div>
     <div class="col-10">
-        <h1>Index</h1>
         <p>
             <a asp-action="Create" class="btn btn-success">Create New</a>
         </p>
