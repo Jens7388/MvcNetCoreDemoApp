@@ -11,60 +11,60 @@
     <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
+        <dt class="col-sm-2">
+            Produktnavn
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProductName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QuantityPerUnit)
+        <dt class="col-sm-2">
+            Antal pr enhed
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.QuantityPerUnit)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
+        <dt class="col-sm-2">
+            Enhedspris
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitsInStock)
+        <dt class="col-sm-2">
+            Enheder på lager
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UnitsInStock)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitsOnOrder)
+        <dt class="col-sm-2">
+            Bestilte enheder
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UnitsOnOrder)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReorderLevel)
+        <dt class="col-sm-2">
+            Genbestillingsniveau
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReorderLevel)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Discontinued)
+        <dt class="col-sm-2">
+            Udgået
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Discontinued)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
+        <dt class="col-sm-2">
+            Categori
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier)
+        </dd>
+        <dt class="col-sm-2">
+            Leverandør
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Supplier.CompanyName)
-        </dd class>
+        </dd>
     </dl>
     
     <form asp-action="Delete">
