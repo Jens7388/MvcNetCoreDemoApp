@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using DataAccess;
-
+using DataAccess.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,17 +15,17 @@ namespace MvcNetCore.Controllers
 {
     public class SupplierController : Controller
     {
-        private readonly SupplierRepository _repo;
+        private readonly IRepositoryBase<Supplier> repo;
 
-        public SupplierController(SupplierRepository repo)
+        public SupplierController(IRepositoryBase<Supplier> postRepository)
         {
-            _repo = repo;
+            repo = postRepository;
         }
 
         // GET: Supplier
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Supplier> suppliers = await _repo.GetAllAsync();
+            IEnumerable<Supplier> suppliers = await repo.GetAllAsync();
 
             return View(suppliers);
         }
@@ -38,7 +38,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Supplier supplier = await _repo.GetByIdAsync(id);
+            Supplier supplier = await repo.GetByIdAsync(id);
 
             if(supplier == null)
             {
@@ -62,7 +62,7 @@ namespace MvcNetCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _repo.AddAsync(supplier);
+                await repo.AddAsync(supplier);
                 return RedirectToAction(nameof(Index));
             }
             return View(supplier);
@@ -76,7 +76,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Supplier supplier = await _repo.GetByIdAsync(id);
+            Supplier supplier = await repo.GetByIdAsync(id);
             if (supplier == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    await _repo.UpdateAsync(supplier);
+                    await repo.UpdateAsync(supplier);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,7 +126,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Supplier supplier = await _repo.GetByIdAsync(id);
+            Supplier supplier = await repo.GetByIdAsync(id);
             if (supplier == null)
             {
                 return NotFound();
@@ -140,16 +140,16 @@ namespace MvcNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Supplier supplier = await _repo.GetByIdAsync(id);
+            Supplier supplier = await repo.GetByIdAsync(id);
 
-            await _repo.DeleteAsync(supplier);
+            await repo.DeleteAsync(supplier);
                 
             return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> SupplierExistsAsync(int id)
         {
-            Supplier result = await _repo.GetByIdAsync(id);
+            Supplier result = await repo.GetByIdAsync(id);
 
             return (result != null);
         }

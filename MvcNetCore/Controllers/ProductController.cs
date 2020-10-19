@@ -13,17 +13,17 @@ namespace MvcNetCore.Controllers
 {
     public class ProductController: Controller
     {
-        private readonly ProductRepository repository;
+        private readonly IRepositoryBase<Product> repo;
 
-        public ProductController(ProductRepository productRepository)
+        public ProductController(IRepositoryBase<Product> postRepository)
         {
-            repository = productRepository;
+            repo = postRepository;
         }
 
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Product> products = await repository.GetAllAsync();
+            IEnumerable<Product> products = await repo.GetAllAsync();
 
             return View(products);
         }
@@ -36,7 +36,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repository.GetByIdAsync(id);
+            Product product = await repo.GetByIdAsync(id);
 
             if(product == null)
             {
@@ -67,7 +67,7 @@ namespace MvcNetCore.Controllers
         {
             if(ModelState.IsValid)
             {
-                await repository.AddAsync(product);
+                await repo.AddAsync(product);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -89,7 +89,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repository.GetByIdAsync(id);
+            Product product = await repo.GetByIdAsync(id);
 
             if(product == null)
             {
@@ -121,7 +121,7 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    await repository.UpdateAsync(product);
+                    await repo.UpdateAsync(product);
                 }
                 catch(DbUpdateConcurrencyException)
                 {
@@ -154,7 +154,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repository.GetByIdAsync(id);
+            Product product = await repo.GetByIdAsync(id);
 
             if(product == null)
             {
@@ -169,16 +169,16 @@ namespace MvcNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Product product = await repository.GetByIdAsync(id);
+            Product product = await repo.GetByIdAsync(id);
 
-            await repository.DeleteAsync(product);
+            await repo.DeleteAsync(product);
 
             return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> ProductExistsAsync(int id)
         {
-            Product result = await repository.GetByIdAsync(id);
+            Product result = await repo.GetByIdAsync(id);
 
             return (result != null);
         }
