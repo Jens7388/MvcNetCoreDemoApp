@@ -13,17 +13,25 @@ namespace MvcNetCore.Controllers
 {
     public class ProductController: Controller
     {
-        private readonly IRepositoryBase<Product> repo;
+        private readonly IRepositoryBase<Product> productRepo;
+        private readonly IRepositoryBase<Category> categoryRepo;
+        private readonly ISupplierRepository supplierRepo;
 
-        public ProductController(IRepositoryBase<Product> postRepository)
+
+        public ProductController(
+            IRepositoryBase<Product> productRepo,
+            IRepositoryBase<Category> categoryRepo,
+            ISupplierRepository supplierRepo)
         {
-            repo = postRepository;
+            this.productRepo = productRepo;
+            this.supplierRepo = supplierRepo;
+            this.categoryRepo = categoryRepo;
         }
 
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Product> products = await repo.GetAllAsync();
+            IEnumerable<Product> products = await productRepo.GetAllAsync();
 
             return View(products);
         }
@@ -36,7 +44,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repo.GetByIdAsync(id);
+            Product product = await productRepo.GetByIdAsync(id);
 
             if(product == null)
             {
@@ -49,8 +57,8 @@ namespace MvcNetCore.Controllers
         // GET: Product/Create
         public async Task<IActionResult> Create()
         {
-            IEnumerable<Category> categories = await new RepositoryBase<Category>().GetAllAsync();
-            IEnumerable<Supplier> suppliers = await new SupplierRepository().GetAllAsync();
+            IEnumerable<Category> categories = await categoryRepo.GetAllAsync();
+            IEnumerable<Supplier> suppliers = await supplierRepo.GetAllAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "CategoryId", "CategoryName");
             ViewData["SupplierId"] = new SelectList(suppliers, "SupplierId", "CompanyName");
@@ -67,13 +75,13 @@ namespace MvcNetCore.Controllers
         {
             if(ModelState.IsValid)
             {
-                await repo.AddAsync(product);
+                await productRepo.AddAsync(product);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            IEnumerable<Category> categories = await new RepositoryBase<Category>().GetAllAsync();
-            IEnumerable<Supplier> suppliers = await new SupplierRepository().GetAllAsync();
+            IEnumerable<Category> categories = await categoryRepo.GetAllAsync();
+            IEnumerable<Supplier> suppliers = await supplierRepo.GetAllAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "CategoryId", "CategoryName", product.CategoryId);
             ViewData["SupplierId"] = new SelectList(suppliers, "SupplierId", "CompanyName", product.SupplierId);
@@ -89,15 +97,15 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repo.GetByIdAsync(id);
+            Product product = await productRepo.GetByIdAsync(id);
 
             if(product == null)
             {
                 return NotFound();
             }
 
-            IEnumerable<Category> categories = await new RepositoryBase<Category>().GetAllAsync();
-            IEnumerable<Supplier> suppliers = await new SupplierRepository().GetAllAsync();
+            IEnumerable<Category> categories = await categoryRepo.GetAllAsync();
+            IEnumerable<Supplier> suppliers = await supplierRepo.GetAllAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "CategoryId", "CategoryName", product.CategoryId);
             ViewData["SupplierId"] = new SelectList(suppliers, "SupplierId", "CompanyName", product.SupplierId);
@@ -121,7 +129,7 @@ namespace MvcNetCore.Controllers
             {
                 try
                 {
-                    await repo.UpdateAsync(product);
+                    await productRepo.UpdateAsync(product);
                 }
                 catch(DbUpdateConcurrencyException)
                 {
@@ -137,8 +145,8 @@ namespace MvcNetCore.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            IEnumerable<Category> categories = await new RepositoryBase<Category>().GetAllAsync();
-            IEnumerable<Supplier> suppliers = await new RepositoryBase<Supplier>().GetAllAsync();
+            IEnumerable<Category> categories = await categoryRepo.GetAllAsync();
+            IEnumerable<Supplier> suppliers = await supplierRepo.GetAllAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "CategoryId", "CategoryName", product.CategoryId);
             ViewData["SupplierId"] = new SelectList(suppliers, "SupplierId", "CompanyName", product.SupplierId);
@@ -154,7 +162,7 @@ namespace MvcNetCore.Controllers
                 return NotFound();
             }
 
-            Product product = await repo.GetByIdAsync(id);
+            Product product = await productRepo.GetByIdAsync(id);
 
             if(product == null)
             {
@@ -169,16 +177,16 @@ namespace MvcNetCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Product product = await repo.GetByIdAsync(id);
+            Product product = await productRepo.GetByIdAsync(id);
 
-            await repo.DeleteAsync(product);
+            await productRepo.DeleteAsync(product);
 
             return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> ProductExistsAsync(int id)
         {
-            Product result = await repo.GetByIdAsync(id);
+            Product result = await productRepo.GetByIdAsync(id);
 
             return (result != null);
         }

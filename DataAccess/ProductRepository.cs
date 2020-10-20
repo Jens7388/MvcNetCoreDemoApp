@@ -10,9 +10,14 @@ namespace DataAccess
 {
     public class ProductRepository: RepositoryBase<Product>
     {
+        public ProductRepository(DbContext context) : base (context)
+        {
+
+        }
+
         public override async Task<Product> GetByIdAsync(int id)
         {
-            return await context.Products
+            return await context.Set<Product>()
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
                 .SingleOrDefaultAsync(p => p.ProductId == id);

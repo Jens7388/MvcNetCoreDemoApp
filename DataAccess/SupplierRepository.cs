@@ -9,18 +9,23 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class SupplierRepository: RepositoryBase<Supplier>
+    public class SupplierRepository: RepositoryBase<Supplier>, ISupplierRepository
     {
+        public SupplierRepository(DbContext context) : base(context)
+        {
+
+        }
+
         public override async Task<Supplier> GetByIdAsync(int id)
         {
-            return await context.Suppliers
+            return await context.Set<Supplier>()
                 .Include(s => s.Products)
                 .SingleOrDefaultAsync(p => p.SupplierId == id);
         }
 
         public override async Task<IEnumerable<Supplier>> GetAllAsync()
         {
-            return await context.Suppliers.Include(s => s.Products).ToListAsync();
+            return await context.Set<Supplier>().Include(s => s.Products).ToListAsync();
         }
     }
 }

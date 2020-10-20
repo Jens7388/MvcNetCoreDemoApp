@@ -16,6 +16,7 @@ using MvcNetCore.Models.Context;
 using DataAccess;
 using DataAccess.Base;
 using MvcNetCore.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcNetCore
 {
@@ -31,14 +32,18 @@ namespace MvcNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<NorthwindContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddMvc();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            services.AddScoped(typeof(IRepositoryBase<Product>), typeof(ProductRepository));
-            services.AddScoped(typeof(IRepositoryBase<Supplier>), typeof(SupplierRepository));
+            services.AddScoped<IRepositoryBase<Product>, ProductRepository>();
+            services.AddScoped<IRepositoryBase<Supplier>, SupplierRepository>();
+            services.AddScoped<IRepositoryBase<Category>, RepositoryBase<Category>>();
+            services.AddScoped<DbContext, NorthwindContext>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             services.AddRazorPages();
         }
@@ -61,10 +66,15 @@ namespace MvcNetCore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthorization();
+            app.UseDeveloperExceptionPage();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(name: "default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseAuthentication();
-            app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

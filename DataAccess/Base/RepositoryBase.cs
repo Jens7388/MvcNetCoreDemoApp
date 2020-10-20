@@ -9,22 +9,15 @@ namespace DataAccess.Base
 {
     public class RepositoryBase<T>: IRepositoryBase<T> where T : class
     {
-        protected NorthwindContext context;
+        protected DbContext context;
 
-        public RepositoryBase(NorthwindContext context) 
+        public RepositoryBase(DbContext context) 
         {
-            Context = context;
+            this.context = context;
         }
 
         public RepositoryBase()
         {
-            context = new NorthwindContext();
-        }
-
-        public virtual NorthwindContext Context
-        {
-            get { return context; }
-            set { context = value; }
         }
 
         public virtual async Task AddAsync(T t)
@@ -42,7 +35,6 @@ namespace DataAccess.Base
         {
             return await context.Set<T>().ToListAsync();
         }
-
 
         public virtual async Task UpdateAsync(T t)
         {
