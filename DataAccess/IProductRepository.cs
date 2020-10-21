@@ -7,10 +7,10 @@ namespace DataAccess
 {
     public interface IProductRepository
     {
-        Task AddAsync(Product t);
+        Task AddAsync(Product product);
         Task<Product> GetByIdAsync(int id);
         Task<IEnumerable<Product>> GetAllAsync();
-        Task UpdateAsync(Product t);
-        Task DeleteAsync(Product t);
+        Task UpdateAsync(Product product);
+        Task DeleteAsync(Product product);
     }
 }

@@ -7,10 +7,10 @@ namespace DataAccess
 {
     public interface ISupplierRepository
     {
-        Task AddAsync(Supplier t);
+        Task AddAsync(Supplier supplier);
         Task<Supplier> GetByIdAsync(int id);
         Task<IEnumerable<Supplier>> GetAllAsync();
-        Task UpdateAsync(Supplier t);
-        Task DeleteAsync(Supplier t);
+        Task UpdateAsync(Supplier supplier);
+        Task DeleteAsync(Supplier supplier);
     }
 }
