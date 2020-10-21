@@ -18,6 +18,9 @@ using DataAccess.Base;
 using MvcNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using MvcNetCore.Models.Interfaces;
 
 namespace MvcNetCore
 {
@@ -31,23 +34,33 @@ namespace MvcNetCore
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                  .AddEntityFrameworkStores<NorthwindContext>();
             services.AddControllersWithViews();
-            services.AddScoped<IRepositoryBase<Product>, ProductRepository>();
-            services.AddScoped<IRepositoryBase<Supplier>, SupplierRepository>();
-            services.AddScoped<IRepositoryBase<Category>, RepositoryBase<Category>>();
-            services.AddScoped<DbContext, NorthwindContext>();
-            services.AddScoped<UserStore>();
-            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             services.AddRazorPages();
+            services.AddControllers();
+
+            //Autofac stuff
+            ContainerBuilder builder = new ContainerBuilder();
+
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<RepositoryBase<Category>>().As<IRepositoryBase<Category>>();
+            builder.RegisterType<NorthwindContext>().As<DbContext>();
+            builder.RegisterType<UserStore>();
+            builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
+            builder.Populate(services);
+
+            IContainer container = builder.Build();
+
+            return new AutofacServiceProvider(container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

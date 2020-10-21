@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MvcNetCore.Models.Interfaces;
+
+using System;
 using System.Collections.Generic;
 
 namespace MvcNetCore.Models
 {
-    public partial class Product
+    public partial class Product: IProduct
     {
         public Product()
         {

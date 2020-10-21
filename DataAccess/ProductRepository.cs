@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ProductRepository: RepositoryBase<Product>
+    public class ProductRepository: RepositoryBase<Product>, IProductRepository
     {
-        public ProductRepository(DbContext context) : base (context)
+        public ProductRepository(DbContext context) : base(context)
         {
 
         }
