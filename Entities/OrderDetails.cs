@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace MvcNetCore.Models
 {
     public partial class OrderDetails

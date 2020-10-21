@@ -1,20 +1,14 @@
 ﻿using DataAccess.Base;
 using Microsoft.EntityFrameworkCore;
 using MvcNetCore.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess
 {
     public class SupplierRepository: RepositoryBase<Supplier>
     {
-        public SupplierRepository(DbContext context) : base(context)
-        {
-
-        }
+        public SupplierRepository(DbContext context) : base(context) { }
 
         public override async Task<Supplier> GetByIdAsync(int id)
         {

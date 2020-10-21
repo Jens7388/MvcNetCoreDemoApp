@@ -8,10 +8,7 @@ namespace DataAccess
 {
     public class ProductRepository: RepositoryBase<Product>
     {
-        public ProductRepository(DbContext context) : base(context)
-        {
-
-        }
+        public ProductRepository(DbContext context) : base(context) { }
 
         public override async Task<Product> GetByIdAsync(int id)
         {

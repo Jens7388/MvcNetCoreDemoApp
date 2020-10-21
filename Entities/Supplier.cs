@@ -1,6 +1,4 @@
 ﻿using MvcNetCore.Models.Interfaces;
-
-using System;
 using System.Collections.Generic;
 
 namespace MvcNetCore.Models
