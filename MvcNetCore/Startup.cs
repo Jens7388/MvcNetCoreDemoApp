@@ -51,11 +51,11 @@ namespace MvcNetCore
             //Autofac stuff
             ContainerBuilder builder = new ContainerBuilder();
 
-            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<ProductRepository>().As<IRepositoryBase<Product>>();
             builder.RegisterType<RepositoryBase<Category>>().As<IRepositoryBase<Category>>();
             builder.RegisterType<NorthwindContext>().As<DbContext>();
             builder.RegisterType<UserStore>();
-            builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
+            builder.RegisterType<SupplierRepository>().As<IRepositoryBase<Supplier>>();
             builder.Populate(services);
 
             IContainer container = builder.Build();

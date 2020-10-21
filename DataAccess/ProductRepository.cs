@@ -1,6 +1,4 @@
-﻿
-
-using DataAccess.Base;
+﻿using DataAccess.Base;
 using Microsoft.EntityFrameworkCore;
 using MvcNetCore.Models;
 using System.Collections.Generic;
@@ -8,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ProductRepository: RepositoryBase<Product>, IProductRepository
+    public class ProductRepository: RepositoryBase<Product>
     {
         public ProductRepository(DbContext context) : base(context)
         {

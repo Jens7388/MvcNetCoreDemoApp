@@ -15,9 +15,9 @@ namespace MvcNetCore.Controllers
 {
     public class SupplierController : Controller
     {
-        private readonly ISupplierRepository repo;
+        private readonly IRepositoryBase<Supplier> repo;
 
-        public SupplierController(ISupplierRepository postRepository)
+        public SupplierController(IRepositoryBase<Supplier> postRepository)
         {
             repo = postRepository;
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class SupplierRepository: RepositoryBase<Supplier>, ISupplierRepository
+    public class SupplierRepository: RepositoryBase<Supplier>
     {
         public SupplierRepository(DbContext context) : base(context)
         {

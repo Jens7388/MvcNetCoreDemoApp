@@ -13,15 +13,15 @@ namespace MvcNetCore.Controllers
 {
     public class ProductController: Controller
     {
-        private readonly IProductRepository productRepo;
+        private readonly IRepositoryBase<Product> productRepo;
         private readonly IRepositoryBase<Category> categoryRepo;
-        private readonly ISupplierRepository supplierRepo;
+        private readonly IRepositoryBase<Supplier> supplierRepo;
 
 
         public ProductController(
-            IProductRepository productRepo,
+            IRepositoryBase<Product> productRepo,
             IRepositoryBase<Category> categoryRepo,
-            ISupplierRepository supplierRepo)
+            IRepositoryBase<Supplier> supplierRepo)
         {
             this.productRepo = productRepo;
             this.supplierRepo = supplierRepo;
