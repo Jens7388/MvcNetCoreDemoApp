@@ -17,6 +17,7 @@ using DataAccess;
 using DataAccess.Base;
 using MvcNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MvcNetCore
 {
@@ -37,12 +38,13 @@ namespace MvcNetCore
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                 .AddEntityFrameworkStores<NorthwindContext>();
             services.AddControllersWithViews();
             services.AddScoped<IRepositoryBase<Product>, ProductRepository>();
             services.AddScoped<IRepositoryBase<Supplier>, SupplierRepository>();
             services.AddScoped<IRepositoryBase<Category>, RepositoryBase<Category>>();
             services.AddScoped<DbContext, NorthwindContext>();
+            services.AddScoped<UserStore>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             services.AddRazorPages();
