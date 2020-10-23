@@ -51,7 +51,10 @@ namespace MvcNetCore
             builder.Populate(services);
 
             IContainer container = builder.Build();
-
+            using(ILifetimeScope scope = container.BeginLifetimeScope())
+            {
+                DbContext service = scope.Resolve<DbContext>();
+            }
             return new AutofacServiceProvider(container);
         }
 
